@@ -1,0 +1,31 @@
+{
+    "name": "Element Info",
+    "version": "1.0",
+    "manifest_version": 2,
+    "description": "Quick way to show element attributes / values",
+    "permissions": [
+      "tabs",
+      "http://*/*",
+      "https://*/*",
+      "background"    
+     ],
+    "background": { 
+      "scripts": ["background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": [
+                "third-party/jquery-3.1.1.min.js",
+                "third-party/highlight/highlight.pack.js",
+                "third-party/clipboard.min.js",
+                "indentHtml.js",
+                "elementInfo.js"
+            ],
+            "css": ["third-party/highlight/atom-one-dark.min.css", "elementInfo.css"]
+        }
+    ],
+    "browser_action": {
+        "default_title": "Element Info"
+    }
+}

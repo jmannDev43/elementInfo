@@ -1,0 +1,39 @@
+
+#elementInfoWrapper {
+    position: absolute;
+    z-index: 9999999;
+}
+
+#elementInfoWrapper code {
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+    width: auto;
+    padding: 2em;
+    max-width: 100%;
+    border-radius: 4px;
+}
+
+#elementInfoWrapper pre {
+    background-color: transparent;
+    border: none;
+}
+
+.elementInfoActive {
+    box-shadow: 1px 1px 2px 1px #0ec5ef;
+    background-color: #0ec5ef;
+    text-decoration: underline;
+    text-decoration-color: #0ec5ef;
+    color: #083c4c;
+}
+
+#eiMessageDiv {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.3);
+    width: auto;
+    border-radius: 4px;
+    z-index: 999999;
+    background-color: #0ec5ef;
+    color: white;
+    padding: 0.5em;
+}
