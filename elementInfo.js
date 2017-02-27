@@ -41,6 +41,8 @@ $('body').on('keydown', (e) => {
     if (!isEnabled){
       $('#elementInfoWrapper').remove();
       $('body').off('mousedown', onMouseDown);
+    } else {
+      $('body').on('mousedown', onMouseDown);
     }
     const message = isEnabled ? 'Active!' : 'Inactive!';
     sendMessage(message);
