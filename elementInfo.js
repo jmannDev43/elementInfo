@@ -16,11 +16,31 @@ const keys = {
   76: 'l'
 };
 
+onMouseDown = (event) => {
+  const isCodeParent = $(event.target).attr('id') === 'elementInfo';
+  const isCodeChild = $(event.target).parents('#elementInfo').length;
+  if (isEnabled && !isCodeParent && !isCodeChild) {
+    element = event.target;
+    x = event.pageX;
+    y = event.pageY;
+    displayElementInfo();
+  }
+};
+
+sendMessage = (message) => {
+  $('#eiMessageDiv').remove();
+  $('body').append(`<div id="eiMessageDiv">${message}</div>`);
+  setTimeout(() => {
+    $('#eiMessageDiv').remove();
+  }, 1500);
+}
+
 $('body').on('keydown', (e) => {
   if (e.ctrlKey && keys[e.keyCode] === 'l') {
     isEnabled = !isEnabled;
     if (!isEnabled){
       $('#elementInfoWrapper').remove();
+      $('body').off('mousedown', onMouseDown);
     }
     const message = isEnabled ? 'Active!' : 'Inactive!';
     sendMessage(message);
@@ -82,17 +102,7 @@ $('body').on('keydown', (e) => {
 
 });
 
-$('body').on('mousedown', (event) => {
-  const isCodeParent = $(event.target).attr('id') === 'elementInfo';
-  const isCodeChild = $(event.target).parents('#elementInfo').length;
-  if (isEnabled && !isCodeParent && !isCodeChild) {
-    element = event.target;
-    x = event.pageX;
-    y = event.pageY;
-    console.log(element);
-    displayElementInfo();
-  }
-});
+$('body').on('mousedown', onMouseDown);
 
 preventDefault = (e) => {
   e = e || window.event;
@@ -124,11 +134,3 @@ displayElementInfo = () => {
       hljs.highlightBlock(block);
     });
 };
-
-sendMessage = (message) => {
-  $('#eiMessageDiv').remove();
-  $('body').append(`<div id="eiMessageDiv">${message}</div>`);
-  setTimeout(() => {
-    $('#eiMessageDiv').remove();
-  }, 1500);
-}

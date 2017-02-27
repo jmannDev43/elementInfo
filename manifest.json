@@ -9,9 +9,6 @@
       "https://*/*",
       "background"    
      ],
-    "background": { 
-      "scripts": ["background.js"]
-    },
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
