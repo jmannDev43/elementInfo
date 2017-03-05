@@ -27,11 +27,12 @@ onMouseDown = (event) => {
   }
 };
 
-sendMessage = (message) => {
+displayToast = (message) => {
   $('#eiMessageDiv').remove();
   $('body').append(`<div id="eiMessageDiv">${message}</div>`);
+  $('eiMessageDiv').hide().fadeIn('slow');
   setTimeout(() => {
-    $('#eiMessageDiv').remove();
+    $('#eiMessageDiv').fadeOut();
   }, 1500);
 }
 
@@ -45,7 +46,7 @@ $('body').on('keydown', (e) => {
       $('body').on('mousedown', onMouseDown);
     }
     const message = isEnabled ? 'Active!' : 'Inactive!';
-    sendMessage(message);
+    displayToast(message);
   }
 
   if (isEnabled && keys[e.keyCode] === 'down') {
@@ -99,7 +100,7 @@ $('body').on('keydown', (e) => {
       }
     });
     $('body').click();
-    sendMessage(`Site Id ${siteId} Copied!`);
+    displayToast(`Site Id ${siteId} Copied!`);
   }
 
 });
@@ -125,14 +126,43 @@ displayElementInfo = () => {
     const x2 = x + 10;
     const y2 = y + 10;
     const html = indentHtml(element.outerHTML).replace(/&/g, '&amp;').replace(/</g, '&lt;');
-
-    const infoDiv = `<div id="elementInfoWrapper" style="top: ${y2}px; left: ${x2}px;">
+    const maxWidth = (window.innerWidth - 30);
+    const infoDiv = `<div id="elementInfoWrapper" style="top: ${y2}px; max-width: ${maxWidth}px;">
                       <pre>
                           <code id="elementInfo" class="html">${html}</code>
                       </pre>
                      </div>`;
     $(document.body).append(infoDiv);
+    const xStyle = getWrapperXStyle();
+    $('#elementInfoWrapper').css(xStyle);
     $('#elementInfoWrapper pre code').each(function(i, block) {
       hljs.highlightBlock(block);
     });
+};
+
+getWrapperXStyle = () => {
+  const halfWidth = window.innerWidth / 2;
+  const wrapperWidth = $('#elementInfoWrapper').width();
+  const style = {};
+  let sideToSet;
+  let sideToClear;
+  let val;
+
+  if (wrapperWidth >= (window.innerWidth - 30)){
+    sideToSet = 'left';
+    sideToClear = 'right';
+    val = 10;
+  } else if (x <= halfWidth) {
+    sideToSet = 'left';
+    sideToClear = 'right';
+    val = (wrapperWidth + x) >= window.innerWidth ? 10 : x + 10;
+  } else {
+    sideToSet = 'right';
+    sideToClear = 'left';
+    val = (wrapperWidth + x) >= window.innerWidth ? 10 : (window.innerWidth - x);
+  }
+
+  style[sideToSet] = `${val}px`;
+  style[sideToClear] = '';
+  return style;
 };
